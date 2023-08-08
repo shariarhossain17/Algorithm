@@ -20,7 +20,7 @@ void dfs(int u)
         dfs(v);
         if (height[v] + 1 > height[u])
         {
-            height[u] = height[v];
+            height[u] = height[v] + 1;
         }
     }
 }
@@ -43,7 +43,7 @@ int main()
     for (int i = 1; i <= n; i++)
     {
 
-        cout << "depth " << i << ": " << depth[i] << endl;
+        cout << "depth " << i << ": " << height[i] << endl;
     }
 
     return 0;

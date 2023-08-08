@@ -1,27 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 1e5 + 5;
+const int N = 1e3 + 5;
+
 vector<int> adj[N];
 
-bool visited[N];
+bool visited[1000];
 
-int depth[N];
-int height[N];
+int adj2[N][N];
+
 void dfs(int u)
 {
+
+    // cout << u << " " << endl;
+
     visited[u] = true;
     for (int v : adj[u])
     {
+
         if (visited[v])
             continue;
-
-        depth[v] = depth[u] + 1;
         dfs(v);
-        if (height[v] + 1 > height[u])
-        {
-            height[u] = height[v];
-        }
     }
 }
 int main()
@@ -38,13 +37,8 @@ int main()
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
+
+    int src = 1;
     dfs(1);
-
-    for (int i = 1; i <= n; i++)
-    {
-
-        cout << "depth " << i << ": " << depth[i] << endl;
-    }
-
     return 0;
 }

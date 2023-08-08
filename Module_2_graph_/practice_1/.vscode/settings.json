@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "*.js": "javascript",
+    "type_traits": "cpp"
+  }
+}
