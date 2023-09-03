@@ -1,6 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+class Edges
+{
+public:
+    int a;
+    int b;
+    int c;
+
+    Edges(int a, int b, int c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+};
+
+bool cmp(Edges a, Edges b)
+{
+    return a.c < b.c;
+}
+
 const int N = 1e5 + 5;
 int parent[N];
 int parentSize[N];
@@ -46,56 +66,35 @@ void set_union(int a, int b)
 
 int main()
 {
-    int n;
-    cin >> n;
-    int m = n - 1;
+
+    int n, m;
+    cin >> n >> m;
 
     set_parent(n);
+    vector<Edges> edgeList;
+    vector<Edges> ans;
     while (m--)
     {
-        int a, b;
-        cin >> a >> b;
-        int leaderA = find_set(a);
-        int leaderB = find_set(b);
+        int a, b, c;
+        cin >> a >> b >> c;
+        edgeList.push_back(Edges(a, b, c));
+    }
+
+    sort(edgeList.begin(), edgeList.end(), cmp);
+
+    for (Edges p : edgeList)
+    {
+        int leaderA = find_set(p.a);
+        int leaderB = find_set(p.b);
 
         if (leaderA == leaderB)
-        {
-            v.push_back(a);
-            v.push_back(b);
-        }
-        else
-        {
-            set_union(a, b);
-        }
+            continue;
+        ans.push_back(p);
+        set_union(p.a, p.b);
     }
-
-    map<int, bool> mp;
-
-    for (int i = 1; i <= n; i++)
+    for (Edges p : ans)
     {
-        int ldr = find_set(i);
-        mp[ldr] = true;
-    }
-
-    vector<int> v2;
-    for (pair<int, bool> p : mp)
-    {
-        v2.push_back(p.first);
-    }
-
-    cout << v2.size() - 1 << endl;
-
-    for (int i = 0; i < v.size(); i++)
-    {
-        cout << v[i] << " ";
-    }
-
-    for (int i = 0; i < v2.size(); i++)
-    {
-        if (!v2[i] != 1)
-        {
-            cout << v2[i] << " ";
-        }
+        cout << p.a << " " << p.b << " " << p.c << endl;
     }
 
     return 0;
